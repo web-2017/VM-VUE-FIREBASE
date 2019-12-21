@@ -17,15 +17,11 @@
         <small
           class="helper-text invalid"
           v-if="$v.email.$dirty && !$v.email.required"
-        >
-          Поле Email не должно быть пустым</small
-        >
+        >Поле Email не должно быть пустым</small>
         <small
           class="helper-text invalid"
           v-else-if="$v.email.$dirty && !$v.email.email"
-        >
-          Введите корректный Email</small
-        >
+        >Введите корретный Email</small>
       </div>
       <div class="input-field">
         <input
@@ -40,17 +36,13 @@
         />
         <label for="password">Пароль</label>
         <small
+          class="helper-text invalid"
           v-if="$v.password.$dirty && !$v.password.required"
-          class="helper-text invalid"
-          >Введите пароль</small
-        >
-        <small
-          v-else-if="$v.password.$dirty && !$v.password.minLength"
-          class="helper-text invalid"
-        >
+        >Введите пароль</small>
+        <small class="helper-text invalid" v-else-if="$v.password.$dirty && !$v.password.minLength">
           Пароль должен быть {{ $v.password.$params.minLength.min }} символов.
-          Сейчас он {{ password.length }}</small
-        >
+          Сейчас он {{ password.length }}
+        </small>
       </div>
     </div>
     <div class="card-action">
@@ -68,22 +60,28 @@
     </div>
   </form>
 </template>
+
 <script>
 import { email, required, minLength } from "vuelidate/lib/validators";
+import messages from "@/utils/messages";
+
 export default {
   name: "login",
-  data() {
-    return {
-      email: "",
-      password: ""
-    };
-  },
+  data: () => ({
+    email: "",
+    password: ""
+  }),
   validations: {
     email: { email, required },
     password: { required, minLength: minLength(6) }
   },
+  mounted() {
+    if (messages[this.$route.query.message]) {
+      this.$message(messages[this.$route.query.message]);
+    }
+  },
   methods: {
-    submitHandler() {
+    async submitHandler() {
       if (this.$v.$invalid) {
         this.$v.$touch();
         return;
@@ -92,7 +90,11 @@ export default {
         email: this.email,
         password: this.password
       };
-      this.$router.push("/");
+
+      try {
+        await this.$store.dispatch("login", formData);
+        this.$router.push("/");
+      } catch (error) {}
     }
   }
 };

@@ -41,12 +41,16 @@
 
 <script>
 export default {
-  data() {
-    return {
-      date: new Date(),
-      interval: null,
-      dropdown: null
-    };
+  data: () => ({
+    date: new Date(),
+    interval: null,
+    dropdown: null
+  }),
+  methods: {
+    logout() {
+      console.log("Logout");
+      this.$router.push("/login?message=logout");
+    }
   },
   mounted() {
     this.interval = setInterval(() => {
@@ -57,18 +61,10 @@ export default {
     });
   },
   beforeDestroy() {
-    // Очистка времени
     clearInterval(this.interval);
     if (this.dropdown && this.dropdown.destroy) {
       this.dropdown.destroy();
     }
-  },
-  methods: {
-    logout() {
-      this.$router.push("/login?message=logout");
-    }
   }
 };
 </script>
-
-<style scoped></style>
