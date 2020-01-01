@@ -1,32 +1,29 @@
 import Vue from "vue";
 import Vuelidate from "vuelidate";
 import App from "./App.vue";
-import router from "./router/router";
-import store from "./store/store";
-import dateFilter from "@/filter/date.filter";
+import router from "./router";
+import store from "./store";
+import dateFilter from "@/filters/date.filter";
+import currencyFilter from "@/filters/currency.filter";
 import messagePlugin from "@/utils/message.plugin";
+import Loader from "@/components/app/Loader";
+import "./registerServiceWorker";
 import "materialize-css/dist/js/materialize.min";
-
-import firebase from "firebase";
+// ------- firebase ------- //
+import firebase from "./firebase";
 import "firebase/auth";
 import "firebase/database";
-import { firebaseConfig } from "./firebase/firebase";
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
-
-// https://www.youtube.com/watch?v=CTLonYohENw&list=PLqKQF2ojwm3njNpksFCi8o-_c-9Vva_W0&index=8
-
-Vue.filter("date", dateFilter);
-Vue.use(Vuelidate);
-Vue.use(messagePlugin);
 
 Vue.config.productionTip = false;
 
-// Метода onAuthStateChanged вызывается несколько раз, чтоб этого избежать записываем все в app
+Vue.use(messagePlugin);
+Vue.use(Vuelidate);
+Vue.filter("date", dateFilter);
+Vue.filter("currency", currencyFilter);
+Vue.component("Loader", Loader);
+
 let app;
-// Только при авторизации дает доступ
+
 firebase.auth().onAuthStateChanged(() => {
   if (!app) {
     app = new Vue({

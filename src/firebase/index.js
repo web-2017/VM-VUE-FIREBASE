@@ -1,5 +1,6 @@
-// Your web app's Firebase configuration
-export const firebaseConfig = {
+import firebase from "firebase/app";
+
+export default firebase.initializeApp({
   apiKey: "AIzaSyDaqJdkF1xQKWxygEf3Ju4VJ9mbUJGoexE",
   authDomain: "vue-vm-85576.firebaseapp.com",
   databaseURL: "https://vue-vm-85576.firebaseio.com",
@@ -8,4 +9,4 @@ export const firebaseConfig = {
   messagingSenderId: "946101009793",
   appId: "1:946101009793:web:a815df98edc0aebb037c80",
   measurementId: "G-E3D1NQFXDC"
-};
+});
