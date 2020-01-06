@@ -7,11 +7,11 @@
         </div>
         <table>
           <thead>
-          <tr>
-            <th>Валюта</th>
-            <th>Курс</th>
-            <th>Дата</th>
-          </tr>
+            <tr>
+              <th>Валюта</th>
+              <th>Курс</th>
+              <th>Дата</th>
+            </tr>
           </thead>
 
           <tbody>
@@ -29,10 +29,10 @@
 
 <script>
 export default {
-  props: ['rates', 'date'],
+  props: ["rates", "date"],
   data: () => ({
-    currencies: ['RUB', 'USD', 'EUR']
+    currencies: ["RUB", "USD", "EUR"]
   })
-}
+};
 </script>
 

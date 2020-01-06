@@ -2,11 +2,10 @@
   <div>
     <Loader v-if="loading" />
     <div class="app-main-layout" v-else>
-      
       <Navbar @click="isOpen = !isOpen" />
 
       <Sidebar v-model="isOpen" />
-      
+
       <main class="app-content" :class="{full: !isOpen}">
         <div class="app-page">
           <router-view />
@@ -23,24 +22,26 @@
 </template>
 
 <script>
-import Navbar from '@/components/app/Navbar'
-import Sidebar from '@/components/app/Sidebar'
+import Navbar from "@/components/app/Navbar";
+import Sidebar from "@/components/app/Sidebar";
 
 export default {
-  name: 'main-layout',
+  name: "main-layout",
   data: () => ({
     isOpen: true,
     loading: true
   }),
   async mounted() {
+    // если есть хоть какие то данные в объекте state info
     if (!Object.keys(this.$store.getters.info).length) {
-      await this.$store.dispatch('fetchInfo')
+      await this.$store.dispatch("fetchInfo");
     }
 
-    this.loading = false
+    this.loading = false;
   },
   components: {
-    Navbar, Sidebar
+    Navbar,
+    Sidebar
   }
-}
+};
 </script>
